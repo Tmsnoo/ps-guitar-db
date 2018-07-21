@@ -1,6 +1,8 @@
 package com.guitar.db;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.guitar.db.model.Location;
+import com.guitar.db.repository.LocationJPARepository;
 import com.guitar.db.repository.LocationRepository;
 
 @ContextConfiguration(locations={"classpath:com/guitar/db/applicationTests-context.xml"})
@@ -22,10 +25,19 @@ import com.guitar.db.repository.LocationRepository;
 public class LocationPersistenceTests {
 	@Autowired
 	private LocationRepository locationRepository;
+	
+	@Autowired
+	LocationJPARepository locationJPARepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	
+	@Test
+	public void testJpaRepositoryFind() {
+		List<Location> location = locationJPARepository.findAll();
+		assertThat(location, notNullValue()); 
+	}
 	@Test
 	@Transactional
 	public void testSaveAndGetAndDelete() throws Exception {
