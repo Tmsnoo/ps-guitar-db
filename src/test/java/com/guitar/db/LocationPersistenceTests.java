@@ -83,6 +83,11 @@ public class LocationPersistenceTests {
 		List<Location> locs = locationJPARepository.findByStateLike("New%");
 		assertThat(locs, hasSize(4));
 	}
+	@Test
+	public void testFindStartingWith() throws Exception {
+		List<Location> locs = locationJPARepository.findByStateStartingWith("New");
+		assertThat(locs, hasSize(4));
+	}
 
 	@Test
 	@Transactional  //note this is needed because we will get a lazy load exception unless we are in a tx

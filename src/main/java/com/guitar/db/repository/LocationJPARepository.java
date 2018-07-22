@@ -14,4 +14,6 @@ public interface LocationJPARepository extends JpaRepository<Location, Long> {
 	List<Location> findByStateOrCountry(String state, String Country);
 	
 	List<Location> findByStateAndCountry(String state , String country);
+	
+	List<Location> findByStateStartingWith(String state);
 }
